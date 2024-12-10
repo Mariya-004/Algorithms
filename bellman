@@ -1,0 +1,9 @@
+Bellman-Ford(G, w, s)
+1. Initialize-Single-Source(G, s)
+2. for i = 1 to |G.V| - 1 do
+3.     for each edge (u, v) in G.E do
+4.         Relax(u, v, w)
+5. for each edge (u, v) in G.E do
+6.     if v.d > u.d + w(u, v) then
+7.         return FALSE
+8. return TRUE
