@@ -1,0 +1,20 @@
+Initialize-Single-Source(G, s)
+1  for each vertex v ∈ G.V
+2      v.d = infinity
+3      v.pi= NIL
+4  s.d = 0
+
+Relax(u, v, w)
+1  if v.d > u.d + w(u, v)
+2      v.d = u.d + w(u, v)
+3      v.pi = u
+
+Dijkstra(G, w, s)
+1  Initialize-Single-Source(G, s)
+2  S =phi
+3  Q = G.V
+4  while Q ≠ 0
+5      u = Extract-Min(Q)
+6      S = S ∪ {u}
+7      for each vertex v ∈ G.Adj[u]
+8          Relax(u, v, w)
