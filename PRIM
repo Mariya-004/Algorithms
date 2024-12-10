@@ -1,0 +1,12 @@
+MST-Prim(G, w, r)
+1  for each u ∈ G.V
+2      u.key = ∞
+3      u.π = NIL
+4  r.key = 0
+5  Q = G.V
+6  while Q ≠ ∅
+7      u = EXTRACT-MIN(Q)
+8      for each v ∈ G.Adj[u]
+9          if v ∈ Q and w(u, v) < v.key
+10             v.π = u
+11             v.key = w(u, v)
