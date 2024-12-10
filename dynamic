@@ -1,0 +1,854 @@
+		\large\textbf{15.DYNAMIC FIBANOCCI SERIES}
+	\end{center}
+\begin{flushright}
+    \large25/09/2024
+\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+Implement a dynamic programming solution for calculating the nth term of the Fibonacci series.\\
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+int Fibonacci(n)  \\n->number of terms
+    1 set fib[0] = 0
+    2 set fib[1] = 1
+    3 for i from 2 to n
+    4     fib[i] = fib[i-1] + fib[i-2]
+    5 return fib[n]
+    
+\end{verbatim}
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+
+using namespace std;
+int Fib(int n) {
+    if (n <= 1) {
+        return 0;
+    }
+    int fib[n + 1];
+    fib[0] = 0;
+    fib[1] = 1;
+    for (int i = 2; i < n + 1; i++) {
+        fib[i] = fib[i - 1] + fib[i - 2];
+    }
+    return fib[n - 1];
+}
+int main() {
+    int n;
+    cout << "Enter the term:";
+    cin >> n;
+    int F = Fib(n);
+    cout << "The " << n << "th term in fibonacci series is:" << F << endl;
+    return 0;
+}	
+
+\end{verbatim}
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+\newline
+  \includegraphics[scale=0.70]{fib.png}
+
+	\end{flushleft} 
+    \newpage
+
+	\begin{center}
+		%%Title of the Program
+		\large\textbf{16.COIN ROW PROBLEM}
+	\end{center}
+	\begin{flushright}
+	    \large25/09/2024
+	\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+Write a program to solve the following problem :Given a number of coins in unsorted order,find the maximum value we can achieve using the least amount of coins and no two adjacent
+coins are chosen during the process.
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+int  CoinRow(coins) \\coins->Array of coins
+    1 Initialize an array F of size n + 1
+    2 Set F[0] = 0
+    3 Set F[1] = coins[0]
+    4 For i from 2 to n
+    5     F[i] = max(coins[i-1] + F[i-2], F[i-1])
+    6 End For
+    7 Return F[n]
+    8 End Function
+
+\end{verbatim}
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+
+using namespace std;
+int max(int a, int b) {
+    if (a >= b) {
+        return a;
+    } else {
+        return b;
+    }
+}
+int coinRow(int A[], int n) {
+    int F[n + 1];
+    F[0] = 0;
+    F[1] = A[0];
+    for (int i = 2; i <= n; i++) {
+        F[i] = max(A[i - 1] + F[i - 2], F[i - 1]);
+
+    }
+    cout << "Maximum amount made using the sum of alternate coins:" << F[n] << endl;
+    cout << "Backtracking array:";
+    for (int i = 0; i <= n; i++) {
+        cout << F[i] << " ";
+    }
+    cout << endl;
+    cout << "coins used:" << endl;
+    int i = n;
+    while (i > 0) {
+        if (i == 1 or F[i] != F[i - 1]) {
+            cout << A[i - 1] << endl;
+            i = i - 2;
+        } else {
+            i = i - 1;
+        }
+    }
+    return F[n];
+}
+int main() {
+    cout << "Enter the number of coins:";
+    int n;
+    cin >> n;
+    int a[n];
+    cout << "Enter the denominations" << endl;
+    for (int i = 0; i < n; i++) {
+        cin >> a[i];
+    }
+    coinRow(a, n);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+\end{verbatim}
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+
+  \includegraphics[scale=0.70]{coinRow.png}
+
+	\end{flushleft} 
+    \newpage
+
+	\begin{center}
+		%%Title of the Program
+		\large\textbf{17.COIN CHANGE PROBLEM}
+	\end{center}
+	\begin{flushright}
+	    \large16/10/2024
+	\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+To determine the minimum number of coins required to make a given amount using specified denominations.
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+int coinchange(d[], n, m)  //d->denominations, n->amount, m->no of coins
+    1 initialize arrays f[n+1] and b[n+1]
+    2 set f[0] = 0 and b[0] = -1
+    3 for i from 1 to n
+    4     set temp = infinity, b = -1
+    5     for j from 0 to m-1
+    6         if i >= d[j] and temp > f[i - d[j]]
+    7             temp = f[i - d[j]], b = j
+    8     set f[i] = temp + 1, b[i] = b
+    9 print array f
+    10 print array b
+    11 set s = f[n], create array arr of size s, k = 0
+    12 while n > 0 and k < s
+    13     coinindex = b[n]
+    14     set c = d[coinindex], arr[k] = c
+    15     n = n - c, k = k + 1
+    16 print "the coins used are:" and array arr
+    
+\end{verbatim}
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+
+#include<limits>
+
+using namespace std;
+int min(int a, int b) {
+    if (a < b) {
+        return a;
+    } else {
+        return b;
+    }
+
+}
+void display(int D[], int n) {
+    for (int i = 0; i < n; i++) {
+        cout << D[i] << " ";
+    }
+    cout << endl;
+}
+int coinChange(int D[], int n, int m) {
+    int F[n + 1];
+    int B[n + 1];
+    F[0] = 0;
+    B[0] = -1;
+    for (int i = 1; i <= n; i++) {
+        int temp = numeric_limits < int > ::max();
+        int j = 0;
+        int b = -1;
+        while (j < m and i >= D[j]) {
+            if (temp > F[i - D[j]]) {
+                temp = F[i - D[j]];
+                b = j;
+            }
+            //temp=min(F[i-D[j]],temp);
+            j = j + 1;
+        }
+        F[i] = temp + 1;
+        B[i] = b;
+
+    }
+    for (int i = 0; i <= n; i++) {
+        cout << F[i] << " ";
+    }
+    cout << endl;
+    for (int i = 0; i <= n; i++) {
+        cout << B[i] << " ";
+    }
+    cout << endl;
+    int s = F[n];
+    int Arr[s];
+    int k = 0;
+    while (n > 0 and k < s) {
+        int coinIndex = B[n];
+        int c = D[coinIndex];
+        Arr[k] = c;
+        n = n - c;
+        k++;
+    }
+    cout << "The coins used are:";
+    for (int i = 0; i < s; i++) {
+        cout << Arr[i] << " ";
+    }
+    cout << endl;
+}
+int main() {
+    cout << "Enter the number of denominations you have:";
+    int num;
+    cin >> num;
+    int D[num];
+    cout << "Enter the denominations one by one" << endl;
+    for (int i = 0; i < num; i++) {
+        int den;
+        cin >> den;
+        D[i] = den;
+    }
+    cout << "Enter the amount to make change for:";
+    int amt;
+    cin >> amt;
+    coinChange(D, amt, num);
+}
+	
+\end{verbatim}
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+\newline
+  \includegraphics[scale=0.70]{coinchange.png}
+
+	\end{flushleft} 
+    \newpage
+
+	\begin{center}
+		%%Title of the Program
+		\large\textbf{18.COIN COLLECTING}
+	\end{center}
+	\begin{flushright}
+	    \large16/10/2024
+	\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+Several coins are placed in cells of an n × m board,
+ no more than one coin per cell. A robot, located in the
+ upper left cell of the board, needs to collect as many
+ of the coins as possible and bring them to the bottom
+ right cell. On each step, the robot can move either one
+ cell to the right or one cell down from its current
+ location. When the robot visits a cell with a coin, it
+ always picks up that coin.
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+int coincollect(c[][]) //c->matrix of coins
+    1 initialize f[5][6]
+    2 for i from 0 to 4
+    3     for j from 0 to 5
+    4         set f[i][j] = c[i][j]
+    5 for j from 1 to 5
+    6     set f[0][j] = c[0][j] + f[0][j-1]
+    7 for i from 1 to 4
+    8     set f[i][0] = c[i][0] + f[i-1][0]
+    9 for i from 1 to 4
+    10    for j from 1 to 5
+    11        set temp = max(f[i][j-1], f[i-1][j])
+    12        set f[i][j] = temp + c[i][j]
+    13 return f[4][5]
+
+
+\end{verbatim}
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+
+using namespace std;
+void display(int mat[5][6]) {
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 6; j++) {
+            cout << mat[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+int coinCollect(int c[5][6]) {
+    int f[5][6];
+    for (int i = 0; i < 5; i++) {
+        for (int j = 0; j < 6; j++) {
+            f[i][j] = c[i][j];
+        }
+    }
+    for (int j = 1; j < 6; j++) {
+        f[0][j] = c[0][j] + f[0][j - 1];
+    }
+    for (int i = 1; i < 5; i++) {
+        f[i][0] = c[i][0] + f[i - 1][0];
+    }
+    for (int i = 1; i < 5; i++) {
+        for (int j = 1; j < 6; j++) {
+
+            int temp = -1;
+            if (f[i][j - 1] > f[i - 1][j]) {
+                temp = f[i][j - 1];
+            } else {
+                temp = f[i - 1][j];
+            }
+            f[i][j] = temp + c[i][j];
+        }
+    }
+
+    return f[4][5];
+}
+int main() {
+    int inp[5][6] = {
+        {0, 0, 0, 0, 1, 0}, 
+	       {0, 1, 0, 1, 0, 0}, 
+	       {0, 0, 0, 1, 0, 1}, 
+	       {0, 0, 1, 0, 0, 1}, 
+	       {1, 0, 0, 0, 1, 0}
+    };
+    display(inp);
+    cout << endl;
+    cout << "Maximum number of coins collected is:" << coinCollect(inp);
+}
+\end{verbatim}
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+\newline
+  \includegraphics[scale=0.70]{coinCollect.png}
+
+	\end{flushleft} 
+    \newpage
+
+	\begin{center}
+		%%Title of the Program
+		\large\textbf{19.MINIMUM COST PATH}
+	\end{center}
+	\begin{flushright}
+	    \large30/10/2024
+	\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+ Given a cost matrix having a cost at each cell. Find 
+the minimum cost it will take to reach cell (m, n) 
+from top left corner cell (0, 0) if the only allowed 
+directions to move from a cell are right, down and 
+diagonally down.
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+int mcp(mat, n, c)  //mat->matrix of path costs, n->rows, c->columns
+    1 initialize f[n][c] by copying mat to f
+    2 f[0][0] = mat[0][0]
+    3 for i from 0 to n-1
+    4     for j from 0 to c-1
+    5         if i == 0 and j > 0
+    6             f[i][j] = f[i][j-1] + mat[i][j]
+    7         else if j == 0 and i > 0
+    8             f[i][j] = f[i-1][j] + mat[i][j]
+    9         else if i > 0 and j > 0
+    10            f[i][j] = min(f[i-1][j], f[i][j-1], f[i-1][j-1]) + mat[i][j]
+    11 i = n-1, j = c-1, b = empty array, ind = 0
+    12 b[ind++] = mat[i][j]
+    13 while i > 0 or j > 0
+    14     if i > 0 and j > 0 and f[i][j] == f[i-1][j-1] + mat[i][j]
+    15         i--, j--
+    16     else if i > 0 and f[i][j] == f[i-1][j] + mat[i][j]
+    17         i--
+    18     else
+    19         j--
+    20 print "path:" and elements of b in reverse order
+    21 return f[n-1][c-1]
+
+
+\end{verbatim}
+\newpage
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+
+using namespace std;
+
+void display(int mat[4][3]) {
+    for (int i = 0; i < 4; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << mat[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+int min(int a, int b, int c) {
+    if (a <= b and a <= c) {
+        return a;
+    } else if (b <= a and b <= c) {
+        return b;
+    } else {
+        return c;
+    }
+}
+int mcp(int mat[4][3], int n, int c) {
+    int F[n][c];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < c; j++) {
+            F[i][j] = mat[i][j];
+        }
+    }
+    F[0][0] = mat[0][0];
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < c; j++) {
+            if (i == 0 and j > 0) {
+                F[i][j] = F[i][j - 1] + mat[i][j];
+            }
+            if (j == 0 and i > 0) {
+                F[i][j] = F[i - 1][j] + mat[i][j];
+            }
+            if (i > 0 and j > 0) {
+                F[i][j] = min(F[i - 1][j], F[i][j - 1], F[i - 1][j - 1]) + mat[i][j];
+            }
+        }
+    }
+    // backtracking
+    int i = n - 1;
+    int j = c - 1;
+    int B[100];
+    int ind = 0;
+    B[ind++] = mat[i][j];
+    while (i > 0 or j > 0) {
+        if (i > 0 and j > 0 and F[i][j] == F[i - 1][j - 1] + mat[i][j]) {
+            i--;
+            j--;
+
+        } else if (i > 0 and F[i][j] == F[i - 1][j] + mat[i][j]) {
+            i--;
+        } else {
+            j--;
+        }
+        B[ind++] = mat[i][j];
+    }
+    cout << "Path:";
+    for (int k = ind - 1; k >= 0; k--) {
+        cout << B[k] << " ";
+    }
+    cout << endl;
+    return F[n - 1][c - 1];
+}
+int main() {
+    int inp[4][3]={{3, 2, 8}, 
+    {1, 9, 7}, 
+    {0, 5, 2}, 
+    {6, 4, 3}};
+    display(inp);
+    cout << endl;
+    cout << mcp(inp, 4, 3);
+}
+
+	
+\end{verbatim}
+\newpage
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+\newline
+  \includegraphics[scale=0.70]{minimumcostpath.png}
+
+	\end{flushleft} 
+    \newpage
+
+	\begin{center}
+		%%Title of the Program
+		\large\textbf{20.0/1 KNAPSACK}
+	\end{center}
+	\begin{flushright}
+	    \large30/10/2024
+	\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+Given n items of known weights w1, . . . , wn and
+ values v1, . . . , vn and a knapsack of capacity W,
+ find the most valuable subset of the items that fit into
+ the knapsack.
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+int knapsack(n, c, w[], v[])\\c->capacity, n->number of items, w->weights, v->values
+    1 mat ← create 2d array of size (n+1) x (c+1)
+    2 for i from 0 to n:
+    3     mat[i][0] = 0
+    4 for i from 0 to c:
+    5     mat[0][i] = 0
+    6 for i from 1 to n:
+    7     for j from 1 to c:
+    8         if j - w[i - 1] >= 0:
+    9             mat[i][j] = max(mat[i - 1][j], v[i - 1] + mat[i - 1][j - w[i - 1]])
+    10         else:
+    11             mat[i][j] = mat[i - 1][j]
+    12 include_items ← array of size n
+    13 index ← 0
+    14 cap ← c
+    15 for i from n down to 1:
+    16     if mat[i][cap] != mat[i - 1][cap]:
+    17         include_items[index++] = i - 1
+    18         cap = cap - w[i - 1]
+    19 return mat[n][c]
+
+\end{verbatim}
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+using namespace std;
+
+int max(int a, int b) {
+    if (a>b){
+        return a;
+    }
+    else{
+        return b;
+    }
+}
+
+int knapsack(int n, int c, int w[], int v[]) {
+    int mat[n + 1][c + 1];
+    
+    // Initialize base cases
+    for (int i = 0; i <= n; i++) {
+        mat[i][0] = 0;
+    }
+    for (int i = 0; i <= c; i++) {
+        mat[0][i] = 0;
+    }
+
+    // Fill the DP table
+    for (int i = 1; i <= n; i++) {
+        for (int j = 1; j <= c; j++) {
+            if (j - w[i - 1] >= 0) {
+                mat[i][j] = max(mat[i - 1][j], v[i - 1] + mat[i - 1][j - w[i - 1]]);
+            } else {
+                mat[i][j] = mat[i - 1][j];
+            }
+        }
+    }
+
+    // Print DP table (optional)
+    for (int i = 0; i <= n; i++) {
+        for (int j = 0; j <= c; j++) {
+            cout << mat[i][j] << "\t";
+        }
+        cout << endl;
+    }
+
+    int val = mat[n][c];
+
+    // Traceback to find included items
+    int includeItems[n]; // array to store included items
+    int index = 0;
+    int cap = c; // capacity tracker
+    for (int i = n; i > 0; i--) {
+        if (mat[i][cap] != mat[i - 1][cap]) {
+            includeItems[index++] = i - 1;
+            cap -= w[i - 1];
+        }
+    }
+
+    // Print included items
+    cout << "Included items: ";
+    for (int i = index - 1; i >= 0; i--) {
+        cout << includeItems[i] << " ";
+    }
+    cout << endl;
+    cout<<"Maximum value:"<<mat[n][c]<<endl;
+    return val;
+}
+
+int main() {
+    cout << "ENTER THE CAPACITY OF THE KNAPSACK: ";
+    int cap;
+    cin >> cap;
+    
+    cout << "ENTER THE NUMBER OF ITEMS: ";
+    int n;
+    cin >> n;
+    
+    int W[n], V[n];
+    for (int i = 0; i < n; i++) {
+        cout << "ENTER THE WEIGHT OF ITEM " << i + 1 << ": ";
+        cin >> W[i];
+        cout << "ENTER THE VALUE OF ITEM " << i + 1 << ": ";
+        cin >> V[i];
+    }
+
+     knapsack(n, cap, W, V) ;
+}
+
+\end{verbatim}
+\newpage
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+\newline
+  \includegraphics[scale=0.70]{knapsack.png}
+
+	\end{flushleft} 
+    \newpage
+
+	\begin{center}
+		%%Title of the Program
+		\large\textbf{21.LONGEST COMMON SUBSEQUENCE}
+	\end{center}
+	\begin{flushright}
+	    \large6/11/2024
+	\end{flushright}
+	\begin{flushleft}
+		\textbf{AIM \\}
+	\end{flushleft} 
+%%Insert AIM of your program here
+Formally, given a sequence X = (x1, x2 , .., xm),
+ another sequence Z =(Z1,Z2,….,Zk)is a subsequence
+ of X if there exists a strictly increasing sequence (i1,
+ i2, , ik) of indices of X such that for all j = 1, 2,.., k,
+ we have xij 
+= Zj.
+ \begin{flushleft}
+
+ %% Theory of the pgm
+
+ \textbf{ALGORITHM \\}
+	\end{flushleft} 
+%% insert ALGORITHM HERE
+%%*******************************************
+\begin{verbatim}
+void lcs(s1, s2) //strings
+    1. rows ← length of s1 + 1
+    2. cols ← length of s2 + 1
+    3. mat ← create 2d array of size rows x cols
+    4. for i from 0 to rows:
+    5. mat[i][0] ← 0
+    6. for i from 0 to cols:
+    7. mat[0][i] ← 0
+    8. for i from 1 to rows - 1:
+    9. for j from 1 to cols - 1:
+    10. if s1[i - 1] == s2[j - 1]:
+    11. mat[i][j] ← mat[i - 1][j - 1] + 1
+    12. else:
+    13. mat[i][j] ← max(mat[i - 1][j], mat[i][j - 1])
+    14. s ← mat[rows - 1][cols - 1]
+    15. arr ← array of size s + 1
+    16. r ← rows - 1
+    17. c ← cols - 1
+    18. d ← s - 1
+    19. arr[s] ← '\0'
+    20. while r > 0 and c > 0:
+    21. if s1[r - 1] == s2[c - 1]:
+    22. arr[d--] ← s2[c - 1]
+    23. r ← r - 1
+    24. c ← c - 1
+    25. else:
+    26. if mat[r - 1][c] > mat[r][c - 1]:
+    27. r ← r - 1
+    28. else:
+    29. c ← c - 1
+    30. print "path"
+    31. print arr as a string
+    32. return mat[rows - 1][cols - 1]
+    
+    
+\end{verbatim}
+\begin{flushleft}
+    \textbf{PROGRAM}
+\end{flushleft}
+\begin{verbatim}
+#include<iostream>
+
+using namespace std;
+int max(int a, int b) {
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
+}
+int lcs(string s1, string s2) {
+    int rows = s1.length() + 1;
+    int cols = s2.length() + 1;
+    int mat[rows][cols];
+    for (int i = 0; i < rows; i++) {
+        mat[i][0] = 0;
+    }
+    for (int i = 0; i < cols; i++) {
+        mat[0][i] = 0;
+    }
+    for (int i = 1; i < rows; i++) {
+        for (int j = 1; j < cols; j++) {
+            if (s1[i - 1] == s2[j - 1]) {
+                mat[i][j] = mat[i - 1][j - 1] + 1;
+            } else {
+                mat[i][j] = max(mat[i - 1][j], mat[i][j - 1]);
+            }
+        }
+    }
+    for (int i = 0; i < rows; i++) {
+        for (int j = 0; j < cols; j++) {
+            cout << mat[i][j] << " ";
+        }
+        cout << endl;
+    }
+    int s = mat[rows - 1][cols - 1];
+    char arr[s + 1];
+    int r = rows - 1;
+    int c = cols - 1;
+    int d = s - 1;
+    arr[s] = '\0';
+    while (r > 0 and c > 0) {
+        if (s1[r - 1] == s2[c - 1]) {
+            arr[d--] = s2[c - 1];
+            r--;
+            c--;
+        } else {
+            if (mat[r - 1][c] > mat[r][c - 1]) {
+                r--;
+            } else {
+                c--;
+            }
+        }
+    }
+    cout << "Path" << endl;
+    cout << arr << endl;
+    cout << endl;
+    return mat[rows - 1][cols - 1];
+
+}
+int main() {
+    cout << "Enter the first string:";
+    string s1;
+    cin >> s1;
+    cout << "Enter the second string:";
+    string s2;
+    cin >> s2;
+    lcs(s1, s2);
+}
+
+	
+\end{verbatim}
+\newpage
+	\begin{flushleft}
+		\textbf{SAMPLE INPUT-OUTPUT}
+\newline
+\newline
+  \includegraphics[scale=0.70]{LCS.png}
+
+	\end{flushleft} 
+    \newpage
+\end{document}
