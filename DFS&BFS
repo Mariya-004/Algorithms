@@ -1,0 +1,28 @@
+void DFS(u):
+    1 print "Visited: " + u
+    2 visited[u] = 1
+    3 for v from 0 to n - 1:
+    4   if adj[u][v] == 1 and visited[v] == 0:
+    5       predecessor[v] = u
+    6       DFS(v)
+    7 for i from 0 to n - 1:
+    8   if visited[i] != 1:
+    9       DFS(i)
+
+
+void BFS(start):
+    1 create a queue Q
+    2 Q.push(start)
+    3 visited[start] = 1
+    4 while Q is not empty:
+    5   u = Q.front()
+    6   Q.pop()
+    7   print "Visited: " + u
+    8   for v from 0 to n - 1:
+    9       if adj[u][v] == 1 and visited[v] == 0:
+    10      visited[v] = 1
+    11      predecessor[v] = u
+    12      Q.push(v)
+    13 for i from 0 to n - 1:
+    14 if visited[i] != 1:
+    15 BFS(i)
